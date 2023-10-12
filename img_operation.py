@@ -1384,7 +1384,7 @@ def drawrec_and_getcenter(dia_list,ori_img):
             bigest_area=recinfo_list[i][5]
             index=i
 
-    final_center=[int(recinfo_list[index][0]),int(recinfo_list[index][1])]
+    final_center=(int(recinfo_list[index][0]),int(recinfo_list[index][1]))
 
     final_reccont=recinfo_list[index][4]
     img_copy=ori_img.copy()
@@ -1425,9 +1425,9 @@ class PIDtrace:
     
 def draw_pid_vector(img:np.ndarray,act,pid_value):
     act,pid_value=check_and_change_shape(act,pid_value,(2,1))
-    start_point=[int(act[0]),int(act[1])]
+    start_point=(int(act[0]),int(act[1]))
     end_point=act+pid_value
-    end_point=[int(end_point[0]),int(end_point[1])]
+    end_point=(int(end_point[0]),int(end_point[1]))
     cv2.arrowedLine(img,start_point,end_point,(128,255,128))
     return img
     

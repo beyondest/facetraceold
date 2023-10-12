@@ -12,10 +12,11 @@ from camera import mvsdk
 
 facew='face.pt'
 yolov5s='yolov5s.pt'
+yolov5sold='yolov5sold.pt'
 img_path='people.jpg'
 
 process_imgsz=(640,640)
-camera_center=np.array([320,320])
+camera_center=(320,320)
 
 kp=1
 ki=0.01
@@ -35,7 +36,7 @@ control.print_getall(camera_info)
 control.camera_open(hcamera)
 pframebuffer_address=control.camera_setframebuffer()
 '''pid init'''
-pid=mp.PIDtrace(kp,ki,kd,pid_shape)
+pid=imo.PIDtrace(kp,ki,kd,pid_shape)
 
 #press esc to end
 while (cv2.waitKey(1) & 0xFF) != 27:
@@ -46,12 +47,12 @@ while (cv2.waitKey(1) & 0xFF) != 27:
     
     if len(dia_list)>0:
     
-        dst,center=mydetect.drawrec_and_getcenter(dia_list,dst)
+        dst,center=imo.drawrec_and_getcenter(dia_list,dst)
         pid_value=pid.update(camera_center,center)
-        dst=mp.draw_pid_vector(dst,camera_center,pid_value)
-    
+        dst=imo.draw_pid_vector(dst,camera_center,pid_value)
+        
     #out.write(dst)
-    cv2.circle(dst,camera_center.astype(np.uint16),10,(125,125,255),-1)
+    cv2.circle(dst,camera_center,10,(125,125,255),-1)
     cv2.imshow('press esc to end',dst)
     
     

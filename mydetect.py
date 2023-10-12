@@ -135,9 +135,10 @@ def myrun(
     if update:
         strip_optimizer(weights[0])  # update model (to fix SourceChangeWarning)
     return im0,dia_list
-
+'''
 img_ori=cv2.imread('people.jpg')
 dst,dia_list=myrun(weights='face.pt',source=img_ori)
 cv2.imshow('afterrun',dst)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
+'''

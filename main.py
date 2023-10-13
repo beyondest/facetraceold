@@ -55,14 +55,14 @@ def main():
 
     #press esc to end
     while (cv2.waitKey(1) & 0xFF) != 27:
-        t1=time.perf_counter()
+        t1=cv2.getTickCount()
         dst=control.grab_img(hcamera,pframebuffer_address)
         
         dst=cv2.resize(dst,process_imgsz,interpolation=cv2.INTER_LINEAR)
         
         dst,dia_list=mydetect.myrun(source=dst,weights=yolov5soldw,draw_img=True,classes=0)
-        t2=time.perf_counter()
-        fps=int(1/(t2-t1))
+        t2=cv2.getTickCount()
+        fps=(t2-t2)/cv2.getTickFrequency()
         cv2.circle(dst,camera_center,10,(125,125,255),-1)
         if len(dia_list)>0:
             count+=1

@@ -5,14 +5,16 @@ import cv2
 import mydetect
 import mydataloaders as mp
 import numpy as np
+import os
+
 from camera import mvsdk
 
 
 
-
+wangyiw='yoloface.pt'
 facew='face.pt'
-yolov5s='yolov5s.pt'
-yolov5sold='yolov5sold.pt'
+yolov5sw='yolov5s.pt'
+yolov5soldw='yolov5sold.pt'
 img_path='people.jpg'
 
 process_imgsz=(640,640)
@@ -23,10 +25,10 @@ ki=0.01
 kd=0.01
 pid_shape=(2,1)
 
+save_img=True
+save_img_path='./out'
 
-
-
-
+count=0
 '''camera init part'''
 hcamera=control.camera_init(mvsdk.CAMERA_MEDIA_TYPE_BGR8)
 control.isp_init(hcamera,2000)
@@ -40,22 +42,28 @@ pid=imo.PIDtrace(kp,ki,kd,pid_shape)
 
 #press esc to end
 while (cv2.waitKey(1) & 0xFF) != 27:
+    
     dst=control.grab_img(hcamera,pframebuffer_address)
     
     dst=cv2.resize(dst,process_imgsz,interpolation=cv2.INTER_LINEAR)
-    dst,dia_list=mydetect.myrun(source=dst,weights=yolov5s,draw_img=True,classes=0)
+    dst,dia_list=mydetect.myrun(source=dst,weights=yolov5soldw,draw_img=True,classes=0)
     
     if len(dia_list)>0:
-    
+        count+=1
         dst,center=imo.drawrec_and_getcenter(dia_list,dst)
         pid_value=pid.update(camera_center,center)
         dst=imo.draw_pid_vector(dst,camera_center,pid_value)
-        
+        yaw=pid_value[0]
+        if save_img:
+            write_path=os.path.join(save_img_path,f'{count}.jpg')
+            cv2.imwrite(write_path,dst)
     #out.write(dst)
     cv2.circle(dst,camera_center,10,(125,125,255),-1)
     cv2.imshow('press esc to end',dst)
     
     
-cv2.destroyAllWindows()
+    
+    
+#cv2.destroyAllWindows()
 control.camera_close(hcamera,pframebuffer_address)
 #out.release()

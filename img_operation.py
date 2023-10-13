@@ -316,8 +316,11 @@ def add_text(img_bgr:np.ndarray,
         scale_size=2
     elif img_size_yx==(256,320):
         scale_size=0.5
+    elif img_size_yx==(640,640):
+        scale_size=1
     else:
-        print('img_size not match, you havent preset for add_text yet')  
+        print('img_size not match, you havent preset for add_text yet')
+        sys.exit()  
     thickness=round(3/(1024*1280)*(img_size_yx[0]*img_size_yx[1]))
     dst=cv2.putText(img_bgr,f'{name}:{value}',pos,font,scale_size,color,thickness)
     return dst
@@ -1388,7 +1391,7 @@ def drawrec_and_getcenter(dia_list,ori_img):
 
     final_reccont=recinfo_list[index][4]
     img_copy=ori_img.copy()
-
+    add_text(img_copy,'biggest_area',bigest_area,(10,100))
     cv2.drawContours(img_copy,[final_reccont],-1,color=(128,128,255))
     cv2.circle(img_copy,final_center,10,(255,128,128),-1)
     return img_copy,final_center

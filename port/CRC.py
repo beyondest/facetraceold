@@ -111,8 +111,8 @@ def Serial_communication(yaw, pitch, fps, is_autoaim):
     pch_Message = pch_Message1 + pch_Message2 + pch_Message3 + pch_Message4 + pch_Message5
 
     wCRC = get_CRC16_check_sum(pch_Message, CRC16_INIT)
-    # ser.write(struct.pack("=cBffHi", f1, f2, f3, f4, f5, wCRC))  #分别是帧头，长度，数据，数据，fps，校验
+    # ser.write(struct.pack("=cBffHi", f1, f2, f3, f4, f5, wCRC))  
     # print("wCRC", hex(wCRC))
-    # print("串口玄学--------------------", struct.pack("=cBffHH", f1, f2, f3, f4, f5, wCRC))
+    # print("portmagic--------------------", struct.pack("=cBffHH", f1, f2, f3, f4, f5, wCRC))
     # print(struct.pack("=H", wCRC))
 '''

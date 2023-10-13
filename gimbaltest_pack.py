@@ -10,7 +10,7 @@ def turn_around(one_cycle_time_s:int=10,
                 pitch_start=0,
                 pitch_end=0,
                 begin_sleep_time_s=2,
-                mode:str='yaw'
+                mode:str='yaw',
                 ):
     times=one_cycle_time_s*fps
     each=2*pi/times
@@ -31,9 +31,27 @@ def turn_around(one_cycle_time_s:int=10,
     Serial_communication(yaw_end,pitch_end,fps)
     
     
+
+
     
-def loc_test(yaw:int=0.79,pitch:int=0.79,fps:int=20):
-    for i in range(10):
+    #init
+    Serial_communication(yaw_start,pitch_start,fps)
+    time.sleep(begin_sleep_time_s)
+    #turn
+    for i in range(times):
+        if mode=='yaw':
+            yaw_start+=each
+        elif mode=='pitch':
+            pitch_start+=each
+        Serial_communication(yaw_start,pitch_start,fps)
+        time.sleep(sleep_time)
+    #uninit
+    Serial_communication(yaw_end,pitch_end,fps)
+    
+    
+    
+def loc_test(yaw=0.79,pitch=0.79,fps:int=20):
+    for i in range(5):
         Serial_communication(yaw,pitch,fps)
         time.sleep(0.5)
         

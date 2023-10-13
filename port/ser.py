@@ -1,17 +1,15 @@
 import numpy as np
-import cv2
-import math
-from CRC import *
+
+from port.CRC import *
 import serial
 
 
 
-# 串口参数
-serialPort = '/dev/ttyTHS0'  # 串口
-baudRate = 115200  # 波特率
-ser = serial.Serial(serialPort, baudRate, timeout=0.5)
 
-def Serial_communication(yaw, pitch, fps, is_autoaim = 1):
+
+def Serial_communication(yaw, pitch, fps, ser,is_autoaim=1):
+
+
     if is_autoaim == 1:
         f1 = bytes("$", encoding='utf8')
         f2 = 10
@@ -32,4 +30,4 @@ def Serial_communication(yaw, pitch, fps, is_autoaim = 1):
     pch_Message = pch_Message1 + pch_Message2 + pch_Message3 + pch_Message4 + pch_Message5
 
     wCRC = get_CRC16_check_sum(pch_Message, CRC16_INIT)
-    ser.write(struct.pack("=cBffHi", f1, f2, f3, f4, f5, wCRC))  #分别是帧头，长度，数据，数据，fps，校验
+    ser.write(struct.pack("=cBffHi", f1, f2, f3, f4, f5, wCRC)) 

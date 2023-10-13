@@ -63,6 +63,7 @@ def main():
         dst,dia_list=mydetect.myrun(source=dst,weights=yolov5soldw,draw_img=True,classes=0)
         t2=cv2.getTickCount()
         fps=(t2-t2)/cv2.getTickFrequency()
+        fps=20
         cv2.circle(dst,camera_center,10,(125,125,255),-1)
         if len(dia_list)>0:
             count+=1

@@ -76,7 +76,7 @@ if __name__=='__main__':
         raise TypeError(f"serial init failed {serialPort} {baudRate}")
     loc_test(pitch=0,yaw=0.395,ser=ser)
     loc_test(yaw=-0.395,pitch=0.2,ser=ser) 
-
+    
 
         
         

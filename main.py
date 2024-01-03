@@ -1,4 +1,3 @@
-import tqdm
 from camera import control
 import img_operation as imo
 import os_operation as oso
@@ -87,8 +86,8 @@ def main():
                 write_path=os.path.join(save_img_path,f'{count}.jpg')
                 cv2.imwrite(write_path,dst)
             
-            print(f'**********yaw={yaw}*********')
-            print(f'**********pitch={pitch}**********')
+            #print(f'**********yaw={yaw}*********')
+            #print(f'**********pitch={pitch}**********')
         #out.write(dst)
         if show:
             cv2.imshow('press esc to end',dst)

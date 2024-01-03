@@ -29,7 +29,7 @@ pid_shape=(2,1)
 
 #gimbal is whether to send to port
 gimbal=False
-save_img=True
+save_img=False
 save_img_path='./out'
 show=False
 
@@ -55,15 +55,16 @@ def main():
 
     #press esc to end
     while (cv2.waitKey(1) & 0xFF) != 27:
-        t1=cv2.getTickCount()
+        t1=time.perf_counter()
         dst=control.grab_img(hcamera,pframebuffer_address)
         
         dst=cv2.resize(dst,process_imgsz,interpolation=cv2.INTER_LINEAR)
         
         dst,dia_list=mydetect.myrun(source=dst,weights=yolov5soldw,draw_img=True,classes=0)
-        t2=cv2.getTickCount()
-        fps=(t2-t2)/cv2.getTickFrequency()
-        fps=20
+        t2=time.perf_counter()
+        
+        fps=1/(t2-t1)
+        
         cv2.circle(dst,camera_center,10,(125,125,255),-1)
         if len(dia_list)>0:
             count+=1
@@ -100,6 +101,7 @@ def main():
     #cv2.destroyAllWindows()
     control.camera_close(hcamera,pframebuffer_address)
     #out.release()
+    
 if __name__=='__main__':
     if gimbal:
         ser=Serial(serialPort,baudRate,timeout=0.5)

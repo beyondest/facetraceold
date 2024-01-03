@@ -17,6 +17,8 @@ yolov5sw='yolov5s.pt'
 yolov5soldw='yolov5sold.pt'
 img_path='people.jpg'
 
+final_weigths = yolov5soldw
+
 process_imgsz=(640,640)
 camera_center=(320,320)
 
@@ -59,7 +61,7 @@ def main():
         
         dst=cv2.resize(dst,process_imgsz,interpolation=cv2.INTER_LINEAR)
         
-        dst,dia_list=mydetect.myrun(source=dst,weights=yolov5soldw,draw_img=True,classes=0)
+        dst,dia_list=mydetect.myrun(source=dst,weights=final_weigths,draw_img=True,classes=0)
         t2=time.perf_counter()
         
         fps=1/(t2-t1)
@@ -100,6 +102,8 @@ def main():
     #cv2.destroyAllWindows()
     control.camera_close(hcamera,pframebuffer_address)
     #out.release()
+    
+    
     
 if __name__=='__main__':
     if gimbal:
